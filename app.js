@@ -13,13 +13,16 @@ useNewUrlParser: true,
 });
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 var Campground = mongoose.model("Campground",campgroundSchema);
+
 // Campground.create(
 //         {
 //             name:"salmon creek",
-//             image:"https://pixabay.com/get/52e8d4444255ae14f1dc84609620367d1c3ed9e04e5074417c2c7ed7914fc1_340.jpg"
+//             image:"https://pixabay.com/get/52e8d4444255ae14f1dc84609620367d1c3ed9e04e5074417c2c7ed7914fc1_340.jpg",
+//             description: "this is a huge campground"
 //         },function(err,campground){
 //             if(err){
 //                 console.log("error");
@@ -42,6 +45,7 @@ var Campground = mongoose.model("Campground",campgroundSchema);
 // ];
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
+
 
 app.get("/",function(req,res){
     res.render("landing");
@@ -68,10 +72,12 @@ app.post("/campgrounds",function(req,res){
         }else{
             res.redirect("/campgrounds");
         }
-    });
-});
+    });});
 app.get("/campgrounds/new",function(req,res){
     res.render("new.ejs");
+});
+app.get("/campgrounds/:id",function(req, res){
+    res.render("show");
 });
 app.listen(3001,'localhost',function(){
     console.log("server is on");
